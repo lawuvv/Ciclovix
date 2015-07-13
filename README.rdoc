@@ -1,28 +1,29 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Algumas configurações importantes:
 
-Things you may want to cover:
+* Configurar as chaves de integridade de cookies em <tt>config\secrets.yml</tt>
 
-* Ruby version
+* Para que o {Recaptcha}[https://www.google.com/recaptcha/intro/index.html] funcione, é necessário realizar cadastro no link indicado e editar <tt>config\initializers\recaptcha.rb</tt>: public_key e private_key.
 
-* System dependencies
+* O mesmo vale para o {Facebook}[https://developers.facebook.com/]: Cadastrar o aplicativo e editar <tt>config\initializers\devise.rb</tt>, linha <tt>config.omniauth :facebook, "APP_ID", "APP_SECRET"</tt>.
 
-* Configuration
+== Banco de dados
 
-* Database creation
+Utilizei o PostgreSQL. Se houver interesse de usar outro, necessário editar <tt>Gemfile</tt>, trocando <tt>gem 'pg'</tt> para a gem correspondente ao novo banco e editar <tt>config\database.yml</tt>
 
-* Database initialization
+== Funcionalidades implementadas
 
-* How to run the test suite
+* Autenticação de usuário
+* Autenticação de usuário com Facebook
+* Manutenção de Pontos de Interesse (inserir, editar e excluir)
+* Inserção de Votos de Credibilidade
+* Inserção de Comentários (com conta do Facebook)
+* Inserção de Denúncias (com Recaptcha)
+* Administração de Pontos de Interesse para Administradores (editar, desabilitar, excluir)
 
-* Services (job queues, cache servers, search engines, etc.)
+== Versões utilizadas
 
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Ruby: 2.1.5 em ambiente Windows de Desenvolvimento e 2.2.2 em CentOS de Produção
+* Rails: 4.2.0 em ambiente Windows de Desenvolvimento e 4.2.1 em CentOS de Produção
+* RubyGems: 2.2.3 em ambiente Windows de Desenvolvimento e 2.4.7 em CentOS de Produção
