@@ -1,0 +1,50 @@
+<h4><%= CONFIG_TITULO %></h4>
+
+<div class="col-md-3">
+  <div class="well bs-component">
+   <%= form_tag('/home', :method => 'get', :class => 'form_principal') do %>
+
+    <!-- FILTRO DE PONTOS -->
+    <fieldset>
+      <legend class="no-margin-bottom">Pontos <label class="lbl-todos">todos <input type="checkbox" name="ckTodosPontos" id="ckTodosPontos" /></legend>
+      </label>
+    	<% @tipo_ponto_todos.each do |tipo| %>
+        <div class="checkbox filtro-ponto">
+          <label>
+    		    <%= check_box_tag "tipo_ponto[]", tipo.id, checkbox_ponto_selecionado(tipo.id) %> <%= image_tag "#{tipo.marcador}" %> <%= tipo.descricao %>
+          </label>
+        </div>
+    	<% end %>
+    </fieldset>
+
+    <!-- FILTRO DE ROTAS -->
+    <fieldset class='oculto'>
+      <legend class="no-margin-bottom">Rotas <label class="lbl-todos">todas <input type="checkbox" name="ckTodasRotas" id="ckTodasRotas" /></legend>
+      <% @tipo_rota_todos.each do |tipo| %>
+        <div class="checkbox">
+          <label>
+            <%= check_box_tag "tipo_rota", tipo.id, true %>
+            <span style="background-color: <%= tipo.marcador%>"><%= image_tag "transparent.png" %></span>
+            <%= tipo.descricao %>
+          </label>
+        </div>
+      <% end %>
+    </fieldset>
+
+    <%= submit_tag 'Filtrar', :class => "btn btn-primary btn-sm" %>
+  <% end %>
+  </div>
+
+  <div class="well bs-component">
+    Se tiver interesse de nos contactar, favor enviar e-mail para <a href="mailto:ciclovix.es@gmail.com">ciclovix.es@gmail.com</a>
+  </div>
+
+</div>
+
+<div class="col-md-9">
+  <div id="map" style='height: 558px;'></div>
+</div>
+
+<script type="text/javascript">
+	var pontos = <%=raw @hash.to_json %>;
+</script>

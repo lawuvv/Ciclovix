@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Credibilidades</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>User</th>
+      <th>Enable</th>
+      <th>Type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @credibilidades.each do |credibilidade| %>
+      <tr>
+        <td><%= credibilidade.valor %></td>
+        <td><%= credibilidade.user_id %></td>
+        <td><%= credibilidade.enable %></td>
+        <td><%= credibilidade.type %></td>
+        <td><%= link_to 'Show', credibilidade %></td>
+        <td><%= link_to 'Edit', edit_credibilidade_path(credibilidade) %></td>
+        <td><%= link_to 'Destroy', credibilidade, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Credibilidade', new_credibilidade_path %>

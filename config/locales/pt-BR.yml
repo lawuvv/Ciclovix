@@ -1,0 +1,60 @@
+
+pt-BR:
+  activerecord:
+    models:
+      user: "Usuário"
+    attributes:
+      user:
+        name: "Nome"
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirmação de Senha"
+        current_password: "Senha atual"
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "não pode ser vazio."
+            email:
+              blank: "não pode ser vazio."
+              invalid: "inválido!"
+              taken: "Usuário já existe!"
+            duplicate_email:
+              taken: "Usuário já existe!"
+            password:
+              blank: "não pode ser vazia."
+              confirmation: "não confere. Por favor digite novamente."
+            password_confirmation:
+              confirmation: "não confere. Por favor digite novamente."
+            current_password:
+              invalid: "inválida."
+              blank: "não pode ser vazia."
+  errors:
+    messages:
+      carrierwave_processing_error: "Não foi possível redimensionar a imagem."
+      carrierwave_integrity_error: "Não é uma imagem."
+      carrierwave_download_error: "Não foi possivel baixar a imagem."
+      extension_white_list_error: "Não é possível inserir arquivos do tipo %{extension}. Tipos permitidos: %{allowed_types}"
+      extension_black_list_error: "Não é possível inserir arquivos do tipo %{extension}. Arquivos proibidos: %{prohibited_types}"
+  recaptcha:
+    errors:
+      incorrect_captcha_sol: "Problema ao obter o resultado do teste reCAPTCHA"
+      verification_failed: "Parece que você digitou a palavra errada (Ou você é um robô)"
+      recaptcha_unreachable: "Problema ao obter o resultado do teste reCAPTCHA"
+  views:
+    pagination:
+      first: "&laquo; Primeiro"
+      last: "Último &raquo;"
+      previous: "&lsaquo; Anterior"
+      next: "Próximo &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Nenhum registro encontrado"
+          one: "Exibindo <b>1</b> registro"
+          other: "Exibindo <b>todos %{count}</b> registros"
+      more_pages:
+        display_entries: "Exibindo registro <b>%{first}&nbsp;-&nbsp;%{last}</b> de <b>%{total}</b> do total"

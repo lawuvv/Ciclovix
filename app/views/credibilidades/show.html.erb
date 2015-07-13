@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Valor:</strong>
+  <%= @credibilidade.valor %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @credibilidade.user_id %>
+</p>
+
+<p>
+  <strong>Enable:</strong>
+  <%= @credibilidade.enable %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @credibilidade.type %>
+</p>
+
+<%= link_to 'Edit', edit_credibilidade_path(@credibilidade) %> |
+<%= link_to 'Back', credibilidades_path %>

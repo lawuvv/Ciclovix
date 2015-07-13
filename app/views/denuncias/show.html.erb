@@ -1,0 +1,28 @@
+
+<p>
+  <strong>User:</strong>
+  <%= @denuncia.user_id %>
+</p>
+
+<p>
+  <strong>Ponto interesse:</strong>
+  <%= @denuncia.ponto_interesse_id %>
+</p>
+
+<p>
+  <strong>Rota:</strong>
+  <%= @denuncia.rota_id %>
+</p>
+
+<p>
+  <strong>Motivo:</strong>
+  <%= @denuncia.motivo_id %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @denuncia.type %>
+</p>
+
+<%= link_to 'Edit', edit_denuncia_path(@denuncia) %> |
+<%= link_to 'Back', denuncia_path %>

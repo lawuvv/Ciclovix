@@ -1,0 +1,3 @@
+class TipoDenuncia < Tipo
+
+end

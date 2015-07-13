@@ -1,0 +1,3 @@
+class CredibilidadeRota < Credibilidade
+
+end

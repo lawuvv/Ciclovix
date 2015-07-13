@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Denuncias</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Ponto interesse</th>
+      <th>Rota</th>
+      <th>Motivo</th>
+      <th>Type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @denuncias.each do |denuncia| %>
+      <tr>
+        <td><%= denuncia.user_id %></td>
+        <td><%= denuncia.ponto_interesse_id %></td>
+        <td><%= denuncia.rota_id %></td>
+        <td><%= denuncia.motivo_id %></td>
+        <td><%= denuncia.type %></td>
+        <td><%= link_to 'Show', denuncia %></td>
+        <td><%= link_to 'Edit', edit_denuncia_path(denuncia) %></td>
+        <td><%= link_to 'Destroy', denuncia, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New denuncia', new_denuncia_path %>

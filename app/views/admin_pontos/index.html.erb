@@ -1,0 +1,67 @@
+<h3>Administração de Pontos</h3>
+
+<table class="table table-bordered table-hover">
+  <tbody>
+    <% @pontos.each do |ponto| %>
+      <tr class="<%= ponto.enable ? "" : "text-muted" %>">
+        
+        <!-- Tipo, Nome e Descrição -->
+        <td>
+          <b>Tipo:</b> <%= ponto.tipo.descricao %><br />
+          <b>Nome:</b> <%= ponto.nome %><br />
+          <b>Descrição:</b> <%= ponto.descricao %>
+        </td>
+
+        <!-- Endereço e Coordenadas -->
+        <td>
+          <b>Endereço:</b> <%= ponto.endereco %><br />
+          <b>Coordenadas:</b> <%= ponto.ponto.latitude %> e <%= ponto.ponto.longitude %>
+        </td>
+
+        <!-- Url -->
+        <td><b>Url:</b> <%= ponto.url %></td>
+
+        <!-- Link e modal para Foto -->
+        <td>
+          <b>Foto:</b>
+          <% if ponto.foto? %>
+            <%= link_to 'visualizar', image_path(ponto.foto), :class => 'ekkoLightbox', 'data-title' => ponto.foto.url %>
+          <% else %>
+            <i class="text-muted">nenhuma</i>
+          <% end %>
+        </td>
+        
+        <!-- Status -->
+        <td><b>Status:</b> <%= ponto.enable ? "Habilitado" : "Desabilitado" %></td>
+
+        <!-- Credibilidades e Denuncias -->
+        <td style="width: 115px">
+          <span class="label label-success" title="Votos Positivos"><%= ponto.credibilidade_positiva %></span>
+          <span class="label label-warning" title="Votos Negativos"><%= ponto.credibilidade_negativa %></span>
+          <span class="label label-danger" title="Denuncias"><%= ponto.denuncias.count %></span>
+        </td>
+
+        <!-- Ações -->
+        <td>
+          <%= link_to 'EDITAR', edit_ponto_interess_path(ponto), :class => "link-admin-pontos" %>
+        </td>
+        <td>
+          <%= form_tag(:method => 'post') do %>
+            <%= hidden_field_tag 'ponto_id', ponto.id %>
+            <%= hidden_field_tag 'ponto_acao', 'DESABILITAR' %>
+            <%= submit_tag ponto.enable ? 'Desabilitar' : 'Habilitar', :class => "btn btn-link link-admin-pontos" %>
+          <% end %>
+        </td>
+        <td>
+          <%= form_tag(:method => 'post') do %>
+            <%= hidden_field_tag 'ponto_id', ponto.id %>
+            <%= hidden_field_tag 'ponto_acao', 'EXCLUIR' %>
+            <%= submit_tag 'EXCLUIR', :class => "btn btn-link link-admin-pontos", data: { confirm: 'Confirma a exclusão?' } %>
+          <% end %>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @pontos %>

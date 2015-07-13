@@ -1,0 +1,122 @@
+<%= form_for(@ponto_interesse, :html => {:class => "form-horizontal", :multipart => true} ) do |f| %>
+
+<% if @ponto_interesse.errors.any? %>
+  <div id="error_explanation">
+    <h2>Erro ao Salvar:</h2>
+    <ul>
+    <% @ponto_interesse.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<fieldset>
+  <legend>Ponto</legend>
+
+  <div class="col-md-12">
+    <p class="text-muted">Para cadastrar o ponto, basta marcá-lo no mapa (use o campo de endereço para buscar), e indicar algumas informações básicas.</p>
+  </div>
+
+  <div class="col-md-4">
+    
+    <div class="form-group">
+      <%= f.label :tipo_id, :class => 'control-label' %>
+      <%= select_tag 'ponto_interesse[tipo_id]', options_from_collection_for_select(@tipos, "id", "descricao", @ponto_interesse.tipo_id), include_blank: true, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :nome, :class => 'control-label' %>
+      <div>
+        <%= f.text_field :nome, :class => 'form-control', :placeholder => 'Nome' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :descricao, "Descrição", :class => 'control-label' %>
+      <div>
+        <%= f.text_area :descricao, :class => 'form-control', :placeholder => 'Descreva um pouco sobre o Ponto', :rows => 3 %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :url, :class => 'control-label' %>
+      <div>
+        <%= f.text_field :url, :class => 'form-control', :placeholder => 'http://www.exemplo.com' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :foto, :class => 'control-label' %>
+      <div class="upload-foto">
+        <div class="panel panel-default">
+          <div class="panel-body text-muted">
+            <% if @ponto_interesse.foto_url %>
+              Esse ponto possui foto. Você pode mantê-la,
+              <label class="text-success remove_foto"><%= f.check_box :remove_foto %> removê-la</label>, ou adicionar uma nova abaixo:
+            <% end %>
+            <%= f.file_field :foto %>
+            <%= f.hidden_field :foto_cache %>
+          </div>
+        </div>
+        <% if @ponto_interesse.foto_url %>
+          <%= image_tag(@ponto_interesse.foto_url, class: "img-responsive") %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Salvar", :class => 'btn btn-default' %>
+    </div>
+
+  </div>
+
+  <div class="col-md-8">
+    <div class="form-group">
+      <div style="margin-left: 15px">
+        <%= f.label :endereco, "Endereço", :class => 'control-label' %>
+      </div>
+      <div>
+        <div class="col-md-9">
+          <%= f.text_field :endereco, :class => 'form-control col-md-8 buscar_endereco', :placeholder => 'Digite um endereço ou proximidade e clique em Buscar' %>
+          <%= hidden_field(:ponto, :latitude) %>
+          <%= hidden_field(:ponto, :longitude) %>
+          <%= hidden_field(:ponto, :estado) %>
+          <%= hidden_field(:ponto, :uf) %>
+          <input type="hidden" id="estado_configuracao" value="<%= CONFIG_ESTADO %>" />
+          <input type="hidden" id="uf_configuracao" value="<%= CONFIG_UF %>" />
+        </div>
+        <div class="col-md-1">
+          <input type="button" value="Buscar" onclick="BuscarNoMapa()" class="btn btn-default">
+        </div>
+        <div class="btn-group col-md-1">
+          <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#" class="usar_geolocalizacao">Usar minha Geolocalização</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div id="map" style="height: 450px;"></div>
+
+    <blockquote class="pull-right text-primary">
+      <p>Ao cadastrar esse Ponto, afirmo que as informações apresentadas são reais, e estou ciente de que o Ponto cadastrado estará disponível no Site <%= CONFIG_NOME_SISTEMA %> para qualquer usuário visualizar, comentar, credibilizar e compartilhar nas redes sociais. Se não concorda com essas condições, favor não cadastre o Ponto.</p>
+      <small>Veja mais informações em nossas <%= link_to 'Políticas de Privacidade', privacidade_path %></small>
+    </blockquote>
+  </div>
+
+  <script type="text/javascript">
+    var geocoder = new google.maps.Geocoder();
+    <% if !@ponto_interesse.new_record? %>
+    AtualizarMapa(<%=raw @ponto_interesse.ponto.latitude %>, <%=raw @ponto_interesse.ponto.longitude %>, 16, true);
+    <% elsif !@ponto_interesse.endereco.blank? %>
+    BuscarNoMapa();
+    <% else %>
+    AtualizarMapa(-20.32379941, -40.28363723, 11, false);
+    <% end %>
+  </script>
+
+</fieldset>
+<% end %>

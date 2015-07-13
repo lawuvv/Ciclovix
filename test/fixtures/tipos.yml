@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  descricao: MyString
+  marcador: MyString
+  enable: false
+
+two:
+  type: 
+  descricao: MyString
+  marcador: MyString
+  enable: false

@@ -1,0 +1,151 @@
+
+<h3>Detalhes do Ponto</h3>
+
+<!-- INFORMAÇÕES -->
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">INFORMAÇÕES</div>
+    <div class="panel-body">
+      <div class="well well-sm">
+        <strong>Tipo:</strong>
+        <%= @ponto_interesse.tipo.descricao %>
+      </div>
+      <div class="well well-sm">
+        <strong>Nome: </strong>
+        <%= @ponto_interesse.nome %>
+      </div>
+      <div class="well well-sm">
+        <strong>Descrição:</strong>
+        <%= @ponto_interesse.descricao %>
+      </div>
+      <div class="well well-sm">
+        <strong>Endereço:</strong>
+        <%= @ponto_interesse.endereco %>
+      </div>
+      <div class="well well-sm">
+        <strong>Url:</strong>
+        <%= @ponto_interesse.url %>
+      </div>
+      <div class="well well-sm">
+        <strong>Cadastrado por:</strong>
+        <%= @ponto_interesse.user.name %>
+      </div>
+
+      <!-- Bloco de Credibilidades -->
+      <div class="well well-sm credibilidades">
+        <strong>Credibilidade:</strong>
+
+        <!-- Voto Positivo -->
+        <%= link_to '?credibilizar=%2B', :class => 'btn btn-sm btn-success', :title => 'Voto Positivo' do %>
+          <span class="glyphicon glyphicon-thumbs-up"></span> <%= credibilidades('+') %>
+        <% end %>
+        
+        <!-- Voto Negativo -->
+        <%= link_to '?credibilizar=-', :class => 'btn btn-sm btn-warning', :title => 'Voto Negativo' do %>
+          <span class="glyphicon glyphicon-thumbs-down"></span> <%= credibilidades('-') %>
+        <% end %>
+        
+        <!-- Denunciar -->
+        <%= link_to '#', :class => 'btn btn-sm btn-danger btn-denuncia right', :title => 'Denunciar', "data-toggle" => "modal", 'data-target' => '#ModalDenuncia' do %>
+          <span class="glyphicon glyphicon-warning-sign"></span> denunciar
+        <% end %>
+
+        <!-- Modal Denunciar -->
+        <%= form_tag({controller: "ponto_interesses", action: "denunciar"}, method: "post", remote: true, class: 'form-denuncia') do %>
+        <div class="modal fade" id="ModalDenuncia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-warning-sign"></span> Denunciar</h4>
+              </div>
+              <div class="modal-body">
+                <h5>Poderia nos dizer porque quer Denunciar esse Ponto? (opcional)</h5>
+                <div class="radios">
+                  <% @tipo_denuncia.each do |tipo| %>
+                    <div class="radio">
+                      <label>
+                        <%= radio_button_tag(:tipo_denuncia, tipo.id) %>
+                        <%= tipo.descricao %>
+                      </label>
+                    </div>
+                  <% end %>
+                </div>
+                <h5>Precisamos saber que você não é um Robô (obrigatório)</h5>
+                <%= recaptcha_tags :ajax => true %>
+                <div class="alert alert-dismissible alert-denuncia">
+                  <a class="close" data-dismiss="alert">&#215;</a>
+                  <span></span>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <%= submit_tag 'Concluir Denuncia', :class => "btn btn-primary" %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAPA -->
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">MAPA</div>
+    <div class="panel-body">
+      <div id="map_user" class="mapa-detalhes"></div>
+      <%= hidden_field(:ponto, :latitude, :value => @ponto_interesse.ponto.latitude) %>
+      <%= hidden_field(:ponto, :longitude, :value => @ponto_interesse.ponto.longitude) %>
+    </div>
+  </div>
+</div>
+
+<!-- BOTÕES -->
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <% if user_signed_in? and current_user.id == @ponto_interesse.user_id %>
+        <%= link_to 'Editar', edit_ponto_interess_path(@ponto_interesse), :class => "btn btn-primary btn-sm botoes-show" %>
+        <%= link_to 'Visualizar Meus Pontos', ponto_interesses_path, :class => "btn btn-primary btn-sm botoes-show" %>
+        <%= link_to 'Ir para Página Inicial', root_path, :class => "btn btn-primary btn-sm botoes-show" %>
+      <% elsif user_signed_in? %>
+        <%= link_to 'Ir para Página Inicial', root_path, :class => "btn btn-primary btn-sm botoes-show" %>
+        <%= link_to 'Visualizar Meus Pontos', ponto_interesses_path, :class => "btn btn-primary btn-sm botoes-show" %>
+      <% else %>
+        <%= link_to 'Ir para Página Inicial', root_path, :class => "btn btn-primary btn-sm botoes-show" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
+<!-- COMENTÁRIOS -->
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">COMENTÁRIOS</div>
+    <div class="panel-body">
+      <div class="fb-comments" data-href="<%= ponto_interess_url %>" data-numposts="5" data-colorscheme="light" data-width="500"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOTO -->
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel-heading">FOTO</div>
+    <div class="panel-body">
+      <% if @ponto_interesse.foto? %>
+        <%= image_tag(@ponto_interesse.foto, class: "img-responsive") %>
+      <% else %>
+        <i>Este ponto não possui foto :(</i>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="clearfix"></div>

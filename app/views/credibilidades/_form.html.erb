@@ -1,0 +1,33 @@
+<%= form_for(@credibilidade) do |f| %>
+  <% if @credibilidade.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@credibilidade.errors.count, "error") %> prohibited this credibilidade from being saved:</h2>
+
+      <ul>
+      <% @credibilidade.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :valor %><br>
+    <%= f.number_field :valor %>
+  </div>
+  <div class="field">
+    <%= f.label :user_id %><br>
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :enable %><br>
+    <%= f.check_box :enable %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

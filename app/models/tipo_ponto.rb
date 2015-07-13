@@ -1,0 +1,3 @@
+class TipoPonto < Tipo
+
+end

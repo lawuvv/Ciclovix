@@ -1,0 +1,57 @@
+<h2>Editar Usuário</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :name, "Nome" %><br />
+    <%= f.text_field :name, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :locale, "Endereço" %><br />
+    <%= f.text_field :locale %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email %>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Esperando confirmação de: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :password, "Senha" %> <i>(deixe em branco se não quiser alterar)</i><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirme a nova senha acima" %> <i>(deixe em branco se não quiser alterar)</i><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password, "Senha atual" %> <i>(precisamos de sua senha atual para confirmar as alterações)</i><br />
+    <%= f.password_field :current_password, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Editar", :class => 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<br />
+
+<h3>Cancelar minha Conta</h3>
+
+<p>
+  Se quiser deletar sua conta, sem problemas.
+  <%= button_to "Cancelar minha Conta", registration_path(resource_name), data: { confirm: "Tem certeza?" }, method: :delete, :class => 'btn btn-default btn-sm' %>
+</p>
+
+<br />
+<%= link_to "Voltar", :back %>
+<br />
+<br />

@@ -1,0 +1,47 @@
+<h3>Meus Pontos</h3>
+
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#lista" data-toggle="tab" aria-expanded="true">Lista</a></li>
+  <li class=""><a href="#mapa" data-toggle="tab" aria-expanded="false">Mapa</a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade active in" id="lista">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Endereço</th>
+          <th>Url</th>
+          <th>Tipo</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @ponto_interesses.each do |ponto_interesse| %>
+          <tr>
+            <td><%= ponto_interesse.nome %></td>
+            <td><%= ponto_interesse.descricao %></td>
+            <td><%= ponto_interesse.endereco %></td>
+            <td><%= ponto_interesse.url %></td>
+            <td><%= ponto_interesse.tipo.descricao %></td>
+            <td><%= link_to 'Detalhes', ponto_interesse %></td>
+            <td><%= link_to 'Editar', edit_ponto_interess_path(ponto_interesse) %></td>
+            <td><%= link_to 'Excluir', ponto_interesse, method: :delete, data: { confirm: 'Confirma a exclusão?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="mapa">
+    <div id="map_user" class="mapa-usuario"></div>
+    <script type="text/javascript">
+      var pontos = <%=raw @hash.to_json %>;
+    </script>
+  </div>
+</div>
+
+<br>
+
+<%= link_to 'Novo Ponto', new_ponto_interess_path, :class => "btn btn-success btn-xs" %>
